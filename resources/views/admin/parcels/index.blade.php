@@ -1,212 +1,585 @@
 @extends('admin.layout')
-@section('title','Manage Parcels | SwiftTrack')
-@section('page-heading','Parcel Management')
-@section('content')
-<div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-6"><div><h2 class="text-2xl font-black">All Parcels</h2><p class="text-slate-500">Search parcels and update their live status.</p></div><form method="GET" class="flex flex-col sm:flex-row gap-2"><input name="search" value="{{ request('search') }}" placeholder="Tracking / sender / receiver" class="rounded-xl border px-4 py-3 bg-white"><select name="status" class="rounded-xl border px-4 py-3 bg-white"><option value="">All statuses</option>@foreach($statuses as $status)<option value="{{ $status }}" @selected(request('status')===$status)>{{ $status }}</option>@endforeach</select><button class="rounded-xl bg-slate-900 text-white px-5 py-3 font-bold">Filter</button></form></div>
-<div class="space-y-4">@forelse($parcels as $parcel)<div class="bg-white rounded-2xl border p-5"><div class="flex flex-col xl:flex-row xl:items-center gap-5 justify-between"><div class="min-w-0"><p class="text-xs text-slate-400">Tracking Number</p><p class="font-black text-lg">{{ $parcel->tracking_number }}</p><p class="text-sm text-slate-500 mt-1">{{ $parcel->user?->name ?? 'Unknown user' }} → {{ $parcel->receiver_name }} · {{ $parcel->parcel_type }} · {{ number_format($parcel->weight,2) }} kg</p><p class="text-xs text-slate-400 mt-1">Created {{ $parcel->created_at->format('d M Y, h:i A') }}</p></div><form method="POST" action="{{ route('admin.parcels.update',$parcel) }}" class="grid sm:grid-cols-3 gap-2 w-full xl:max-w-3xl">@csrf @method('PATCH')<select name="status" required class="rounded-xl border px-3 py-3">@foreach($statuses as $status)<option value="{{ $status }}" @selected($parcel->current_status===$status)>{{ $status }}</option>@endforeach</select><input name="location" placeholder="Current location" class="rounded-xl border px-3 py-3"><input name="remarks" placeholder="Remarks" class="rounded-xl border px-3 py-3"><button class="sm:col-span-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white py-3 font-bold">Update Status</button></form></div></div>@empty<div class="bg-white rounded-2xl border p-12 text-center text-slate-500">No parcels match your search.</div>@endforelse</div><div class="mt-6">{{ $parcels->links() }}</div>
-@endsection
-@extends('admin.layout')
 
 @section('title', 'Manage Parcels | SwiftTrack')
 
-@section('page-title', 'Manage Parcels')
+@section('page-heading', 'Parcel Management')
 
 @section('content')
 
 <style>
 
-    .heading {
-        margin-bottom: 22px;
+    .page-header {
+        margin-bottom: 25px;
     }
 
-    .heading h1 {
+    .page-header h2 {
+        font-size: 28px;
+        font-weight: 900;
         color: #0f172a;
-        font-size: 25px;
         margin-bottom: 5px;
     }
 
-    .heading p {
+    .page-header p {
         color: #64748b;
         font-size: 14px;
     }
 
-    .table-card {
+
+    .filter-card,
+    .parcel-card {
         background: white;
         border: 1px solid #e2e8f0;
-        border-radius: 15px;
-        overflow: hidden;
+        border-radius: 16px;
     }
 
-    .table-wrapper {
-        overflow-x: auto;
+
+    .filter-card {
+        padding: 20px;
+        margin-bottom: 22px;
     }
 
-    table {
+
+    .filter-form {
+        display: grid;
+        grid-template-columns: 1fr 220px 120px;
+        gap: 12px;
+    }
+
+
+    .input {
         width: 100%;
-        border-collapse: collapse;
-        min-width: 900px;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        border: 1px solid #cbd5e1;
+        border-radius: 10px;
+        background: white;
+        outline: none;
     }
 
-    th {
-        background: #f8fafc;
-        color: #64748b;
-        text-align: left;
-        padding: 14px;
-        font-size: 12px;
+
+    .input:focus {
+        border-color: #2563eb;
     }
 
-    td {
-        padding: 15px 14px;
-        border-top: 1px solid #e2e8f0;
-        font-size: 13px;
+
+    .filter-btn,
+    .update-btn {
+        border: none;
+        border-radius: 10px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
     }
+
+
+    .filter-btn {
+        background: #0f172a;
+    }
+
+
+    .update-btn {
+        background: #2563eb;
+        padding: 13px;
+        width: 100%;
+        margin-top: 5px;
+    }
+
+
+    .update-btn:hover {
+        background: #1d4ed8;
+    }
+
+
+    .parcel-card {
+        padding: 24px;
+        margin-bottom: 18px;
+    }
+
+
+    .parcel-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 25px;
+        margin-bottom: 22px;
+    }
+
+
+    .label {
+        color: #94a3b8;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+        margin-bottom: 5px;
+    }
+
 
     .tracking {
         color: #2563eb;
-        font-weight: bold;
+        font-size: 20px;
+        font-weight: 900;
     }
+
+
+    .parcel-info {
+        color: #64748b;
+        font-size: 13px;
+        margin-top: 7px;
+    }
+
+
+    .status-box {
+        text-align: right;
+    }
+
 
     .status {
-        padding: 6px 10px;
-        border-radius: 20px;
-        background: #dbeafe;
+        display: inline-block;
+        background: #eff6ff;
         color: #1d4ed8;
-        font-size: 11px;
-        font-weight: bold;
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 800;
     }
 
-    .empty {
-        text-align: center;
-        padding: 60px;
+
+    .sender-section {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 18px;
+    }
+
+
+    .sender-section h3 {
+        margin: 0 0 5px;
+        font-size: 17px;
+        font-weight: 900;
+        color: #0f172a;
+    }
+
+
+    .sender-section p {
+        margin: 0 0 15px;
+        font-size: 13px;
         color: #64748b;
+    }
+
+
+    .sender-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+
+
+    .full {
+        grid-column: 1 / -1;
+    }
+
+
+    .update-section {
+        border-top: 1px solid #e2e8f0;
+        padding-top: 20px;
+    }
+
+
+    .update-title {
+        font-size: 16px;
+        font-weight: 900;
+        margin-bottom: 12px;
+    }
+
+
+    .update-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+    }
+
+
+    .empty {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 60px 20px;
+        text-align: center;
+        color: #64748b;
+    }
+
+
+    .pagination {
+        margin-top: 25px;
+    }
+
+
+    @media(max-width: 900px) {
+
+        .filter-form,
+        .sender-grid,
+        .update-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .full {
+            grid-column: auto;
+        }
+
+        .parcel-top {
+            flex-direction: column;
+        }
+
+        .status-box {
+            text-align: left;
+        }
+
     }
 
 </style>
 
 
-<div class="heading">
+<!-- HEADER -->
 
-    <h1>
+<div class="page-header">
+
+    <h2>
         📦 All Parcels
-    </h1>
+    </h2>
 
     <p>
-        View all courier bookings registered in SwiftTrack.
+        Manage sender details and update live parcel tracking.
     </p>
 
 </div>
 
 
-<div class="table-card">
+<!-- FILTER -->
 
-    @if(isset($parcels) && $parcels->count())
+<div class="filter-card">
 
-        <div class="table-wrapper">
+    <form
+        method="GET"
+        action="{{ route('admin.parcels') }}"
+        class="filter-form"
+    >
 
-            <table>
+        <input
+            type="text"
+            name="search"
+            value="{{ request('search') }}"
+            placeholder="Search tracking number, sender or receiver"
+            class="input"
+        >
 
-                <thead>
 
-                    <tr>
+        <select
+            name="status"
+            class="input"
+        >
 
-                        <th>
-                            Tracking Number
-                        </th>
+            <option value="">
+                All Statuses
+            </option>
 
-                        <th>
-                            Customer
-                        </th>
+            @foreach($statuses as $status)
 
-                        <th>
-                            Receiver
-                        </th>
+                <option
+                    value="{{ $status }}"
+                    @selected(request('status') === $status)
+                >
+                    {{ $status }}
+                </option>
 
-                        <th>
-                            Type
-                        </th>
+            @endforeach
 
-                        <th>
-                            Weight
-                        </th>
+        </select>
 
-                        <th>
-                            Status
-                        </th>
 
-                        <th>
-                            Delivery
-                        </th>
+        <button
+            type="submit"
+            class="filter-btn"
+        >
+            🔍 Filter
+        </button>
 
-                    </tr>
-
-                </thead>
-
-                <tbody>
-
-                    @foreach($parcels as $parcel)
-
-                        <tr>
-
-                            <td class="tracking">
-                                {{ $parcel->tracking_number }}
-                            </td>
-
-                            <td>
-                                {{ $parcel->user->name ?? 'N/A' }}
-                            </td>
-
-                            <td>
-                                {{ $parcel->receiver_name }}
-                            </td>
-
-                            <td>
-                                {{ $parcel->parcel_type }}
-                            </td>
-
-                            <td>
-                                {{ number_format($parcel->weight, 2) }} kg
-                            </td>
-
-                            <td>
-
-                                <span class="status">
-                                    {{ $parcel->current_status }}
-                                </span>
-
-                            </td>
-
-                            <td>
-                                {{ $parcel->estimated_delivery_date?->format('d M Y') ?? 'N/A' }}
-                            </td>
-
-                        </tr>
-
-                    @endforeach
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    @else
-
-        <div class="empty">
-
-            📦
-
-            <h3>
-                No parcels available
-            </h3>
-
-            <p>
-                Parcel bookings will appear here.
-            </p>
-
-        </div>
-
-    @endif
+    </form>
 
 </div>
+
+
+<!-- PARCELS -->
+
+@if($parcels->count())
+
+
+    @foreach($parcels as $parcel)
+
+        <div class="parcel-card">
+
+
+            <!-- BASIC INFORMATION -->
+
+            <div class="parcel-top">
+
+                <div>
+
+                    <div class="label">
+                        Tracking Number
+                    </div>
+
+                    <div class="tracking">
+                        {{ $parcel->tracking_number }}
+                    </div>
+
+                    <div class="parcel-info">
+
+                        Customer:
+                        <strong>
+                            {{ $parcel->user?->name ?? 'Unknown User' }}
+                        </strong>
+
+                    </div>
+
+                    <div class="parcel-info">
+
+                        Receiver:
+                        {{ $parcel->receiver_name }}
+
+                        ·
+
+                        {{ $parcel->receiver_phone }}
+
+                    </div>
+
+                    <div class="parcel-info">
+
+                        Type:
+                        {{ $parcel->parcel_type }}
+
+                        ·
+
+                        Weight:
+                        {{ number_format($parcel->weight, 2) }} kg
+
+                    </div>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <div class="label">
+                        Current Status
+                    </div>
+
+                    <span class="status">
+                        {{ $parcel->current_status }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- UPDATE FORM -->
+
+            <form
+                method="POST"
+                action="{{ route('admin.parcels.update', $parcel) }}"
+            >
+
+                @csrf
+
+                @method('PATCH')
+
+
+                <!-- SENDER -->
+
+                <div class="sender-section">
+
+                    <h3>
+                        📤 Sender Details
+                    </h3>
+
+                    <p>
+                        Admin enters or updates the sender and pickup information.
+                    </p>
+
+
+                    <div class="sender-grid">
+
+                        <div>
+
+                            <label>
+                                Sender Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="sender_name"
+                                class="input"
+                                value="{{ old('sender_name', $parcel->sender_name) }}"
+                                placeholder="Enter sender name"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label>
+                                Sender Phone
+                            </label>
+
+                            <input
+                                type="text"
+                                name="sender_phone"
+                                class="input"
+                                value="{{ old('sender_phone', $parcel->sender_phone) }}"
+                                placeholder="Enter sender phone"
+                            >
+
+                        </div>
+
+
+                        <div class="full">
+
+                            <label>
+                                Pickup Address
+                            </label>
+
+                            <textarea
+                                name="sender_address"
+                                class="input"
+                                rows="3"
+                                placeholder="Enter complete pickup address"
+                            >{{ old('sender_address', $parcel->sender_address) }}</textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRACKING UPDATE -->
+
+                <div class="update-section">
+
+                    <div class="update-title">
+                        📍 Delivery Tracking Update
+                    </div>
+
+
+                    <div class="update-grid">
+
+                        <div>
+
+                            <label>
+                                Status
+                            </label>
+
+                            <select
+                                name="status"
+                                class="input"
+                                required
+                            >
+
+                                @foreach($statuses as $status)
+
+                                    <option
+                                        value="{{ $status }}"
+                                        @selected(
+                                            $parcel->current_status === $status
+                                        )
+                                    >
+                                        {{ $status }}
+                                    </option>
+
+                                @endforeach
+
+                            </select>
+
+                        </div>
+
+
+                        <div>
+
+                            <label>
+                                Current Location
+                            </label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                class="input"
+                                placeholder="e.g. Nashik Hub"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label>
+                                Remarks
+                            </label>
+
+                            <input
+                                type="text"
+                                name="remarks"
+                                class="input"
+                                placeholder="e.g. Parcel reached hub"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="update-btn"
+                    >
+                        🚚 Save Parcel & Tracking Update
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    @endforeach
+
+
+    <div class="pagination">
+
+        {{ $parcels->links() }}
+
+    </div>
+
+
+@else
+
+    <div class="empty">
+
+        <div style="font-size:45px;">
+            📦
+        </div>
+
+        <h3>
+            No Parcels Found
+        </h3>
+
+        <p>
+            No parcels match your current search or filter.
+        </p>
+
+    </div>
+
+@endif
+
 
 @endsection

@@ -8,215 +8,225 @@
 
 <style>
 
-    /* ================================
-       MAIN PAGE
-    ================================= */
+    /* ==============================
+       PAGE
+    ============================== */
 
-    .parcel-page {
-        max-width: 1200px;
+    .booking-page {
+        max-width: 1000px;
         margin: 0 auto;
+        padding: 10px 0 40px;
     }
 
-    .parcel-header {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 28px;
+
+    /* ==============================
+       PAGE HEADER
+    ============================== */
+
+    .booking-header {
+        margin-bottom: 25px;
     }
 
-    .parcel-header-icon {
-        width: 58px;
-        height: 58px;
-        border-radius: 16px;
-        background: #dbeafe;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 27px;
-        flex-shrink: 0;
-    }
-
-    .parcel-header h1 {
-        margin: 0;
+    .booking-header h1 {
+        margin: 0 0 8px;
         font-size: 30px;
         font-weight: 800;
         color: #0f172a;
     }
 
-    .parcel-header p {
-        margin: 5px 0 0;
-        color: #64748b;
-        font-size: 14px;
-    }
-
-
-    /* ================================
-       ERROR BOX
-    ================================= */
-
-    .error-box {
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-        border-radius: 14px;
-        padding: 18px 20px;
-        margin-bottom: 24px;
-        color: #991b1b;
-    }
-
-    .error-title {
-        font-weight: 700;
-        margin-bottom: 8px;
-    }
-
-    .error-box ul {
+    .booking-header p {
         margin: 0;
-        padding-left: 20px;
-        font-size: 14px;
+        color: #64748b;
+        font-size: 15px;
     }
 
 
-    /* ================================
-       SENDER + RECEIVER
-    ================================= */
+    /* ==============================
+       MAIN CARD
+    ============================== */
 
-    .people-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 22px;
-        margin-bottom: 22px;
-    }
-
-
-    /* ================================
-       CARD
-    ================================= */
-
-    .parcel-card {
+    .booking-card {
         background: #ffffff;
         border: 1px solid #e2e8f0;
         border-radius: 18px;
         overflow: hidden;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+        box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
     }
 
+
+    /* ==============================
+       CARD HEADER
+    ============================== */
+
     .card-header {
-        padding: 21px 24px;
-        border-bottom: 1px solid #eef2f7;
+        background: linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fafc
+        );
+
+        padding: 24px 28px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-header-content {
         display: flex;
         align-items: center;
         gap: 14px;
     }
 
-    .card-icon {
+    .header-icon {
         width: 48px;
         height: 48px;
-        border-radius: 14px;
+        border-radius: 13px;
+        background: #2563eb;
+        color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 21px;
-        flex-shrink: 0;
-    }
-
-    .sender-icon {
-        background: #dbeafe;
-    }
-
-    .receiver-icon {
-        background: #dcfce7;
-    }
-
-    .parcel-icon {
-        background: #f3e8ff;
+        font-size: 23px;
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.25);
     }
 
     .card-header h2 {
-        margin: 0;
-        font-size: 18px;
+        margin: 0 0 4px;
+        font-size: 19px;
         font-weight: 800;
-        color: #172554;
+        color: #0f172a;
     }
 
     .card-header p {
-        margin: 4px 0 0;
-        color: #64748b;
+        margin: 0;
         font-size: 13px;
-    }
-
-    .card-body {
-        padding: 24px;
+        color: #64748b;
     }
 
 
-    /* ================================
+    /* ==============================
        FORM
-    ================================= */
+    ============================== */
 
-    .form-group {
-        margin-bottom: 19px;
+    .booking-form {
+        padding: 30px;
     }
 
-    .form-group:last-child {
+
+    /* ==============================
+       SECTION
+    ============================== */
+
+    .form-section {
+        margin-bottom: 30px;
+    }
+
+    .form-section:last-child {
         margin-bottom: 0;
     }
 
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section-title span {
+        width: 32px;
+        height: 32px;
+        border-radius: 9px;
+        background: #eff6ff;
+        color: #2563eb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+
+    .section-title h3 {
+        margin: 0;
+        color: #0f172a;
+        font-size: 16px;
+        font-weight: 800;
+    }
+
+
+    /* ==============================
+       FORM GRID
+    ============================== */
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group.full {
+        grid-column: 1 / -1;
+    }
+
+
+    /* ==============================
+       LABEL
+    ============================== */
+
     .form-label {
-        display: block;
-        margin-bottom: 8px;
+        color: #334155;
         font-size: 13px;
         font-weight: 700;
-        color: #334155;
+        margin-bottom: 7px;
     }
 
     .required {
         color: #ef4444;
+        margin-left: 2px;
     }
 
-    .input-wrapper {
-        position: relative;
-    }
 
-    .input-icon {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 16px;
-        color: #94a3b8;
-        z-index: 2;
-        pointer-events: none;
-    }
-
-    .textarea-icon {
-        top: 16px;
-        transform: none;
-    }
+    /* ==============================
+       INPUTS
+    ============================== */
 
     .form-input,
     .form-select,
     .form-textarea {
         width: 100%;
         box-sizing: border-box;
+
         border: 1px solid #cbd5e1;
-        border-radius: 11px;
         background: #ffffff;
-        color: #1e293b;
-        font-family: inherit;
+
+        color: #0f172a;
+
+        border-radius: 10px;
+
+        padding: 12px 14px;
+
         font-size: 14px;
+
         outline: none;
-        transition: all 0.2s ease;
+
+        transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
     }
 
     .form-input,
     .form-select {
         height: 46px;
-        padding: 0 14px 0 43px;
     }
 
     .form-textarea {
-        min-height: 105px;
-        padding: 13px 14px 13px 43px;
+        min-height: 110px;
         resize: vertical;
+        font-family: inherit;
     }
 
     .form-input::placeholder,
@@ -224,417 +234,312 @@
         color: #94a3b8;
     }
 
+    .form-input:hover,
+    .form-select:hover,
+    .form-textarea:hover {
+        border-color: #94a3b8;
+    }
+
     .form-input:focus,
     .form-select:focus,
     .form-textarea:focus {
         border-color: #2563eb;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
     }
 
 
-    /* ================================
-       PARCEL DETAILS
-    ================================= */
+    /* ==============================
+       HELP TEXT
+    ============================== */
 
-    .parcel-details {
-        margin-bottom: 22px;
+    .help-text {
+        color: #94a3b8;
+        font-size: 11px;
+        margin-top: 6px;
     }
 
-    .parcel-fields {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
+
+    /* ==============================
+       ERROR
+    ============================== */
+
+    .input-error {
+        border-color: #ef4444 !important;
     }
 
-    .select-wrapper {
-        position: relative;
-    }
-
-    .select-arrow {
-        position: absolute;
-        right: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #64748b;
-        pointer-events: none;
+    .error-message {
+        color: #dc2626;
         font-size: 12px;
-    }
-
-    .form-select {
-        appearance: none;
-        padding-right: 40px;
+        margin-top: 6px;
     }
 
 
-    /* ================================
-       TRACKING INFO
-    ================================= */
+    /* ==============================
+       INFO BOX
+    ============================== */
 
-    .tracking-info {
-        margin-top: 23px;
-        background: #eff6ff;
-        border: 1px solid #bfdbfe;
-        border-radius: 13px;
-        padding: 16px 18px;
+    .info-box {
         display: flex;
         align-items: flex-start;
-        gap: 13px;
+        gap: 12px;
+
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+
+        border-radius: 12px;
+
+        padding: 15px 17px;
+
+        margin-bottom: 25px;
     }
 
-    .tracking-info-icon {
-        width: 34px;
-        height: 34px;
-        background: #2563eb;
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        flex-shrink: 0;
+    .info-icon {
+        font-size: 20px;
+        line-height: 1;
     }
 
-    .tracking-info h3 {
-        margin: 1px 0 4px;
-        color: #1d4ed8;
-        font-size: 14px;
-    }
-
-    .tracking-info p {
-        margin: 0;
-        color: #2563eb;
+    .info-box strong {
+        display: block;
+        color: #1e40af;
         font-size: 13px;
+        margin-bottom: 3px;
+    }
+
+    .info-box p {
+        margin: 0;
+        color: #475569;
+        font-size: 12px;
         line-height: 1.5;
     }
 
 
-    /* ================================
-       BUTTONS
-    ================================= */
+    /* ==============================
+       BUTTON AREA
+    ============================== */
 
     .form-actions {
         display: flex;
         justify-content: flex-end;
-        align-items: center;
         gap: 12px;
-        padding-bottom: 25px;
-    }
 
-    .cancel-btn,
-    .book-btn {
-        height: 46px;
-        padding: 0 23px;
-        border-radius: 11px;
-        font-family: inherit;
-        font-size: 14px;
-        font-weight: 700;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        box-sizing: border-box;
+        padding-top: 25px;
+        margin-top: 5px;
+
+        border-top: 1px solid #e2e8f0;
     }
 
     .cancel-btn {
-        background: #ffffff;
-        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 12px 20px;
+
+        border-radius: 10px;
+
+        background: #f8fafc;
         border: 1px solid #cbd5e1;
+
+        color: #475569;
+
+        text-decoration: none;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        transition: 0.2s;
     }
 
     .cancel-btn:hover {
-        background: #f8fafc;
-        border-color: #94a3b8;
+        background: #f1f5f9;
+        color: #0f172a;
     }
 
-    .book-btn {
+    .submit-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
         border: none;
+
+        padding: 12px 22px;
+
+        border-radius: 10px;
+
         background: #2563eb;
         color: white;
-        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.20);
+
+        font-size: 14px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.22);
+
+        transition: 0.2s;
     }
 
-    .book-btn:hover {
+    .submit-btn:hover {
         background: #1d4ed8;
         transform: translateY(-1px);
-        box-shadow: 0 8px 18px rgba(37, 99, 235, 0.28);
+        box-shadow: 0 7px 18px rgba(37, 99, 235, 0.28);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
     }
 
 
-    /* ================================
+    /* ==============================
        RESPONSIVE
-    ================================= */
+    ============================== */
 
-    @media (max-width: 900px) {
+    @media (max-width: 750px) {
 
-        .people-grid {
+        .booking-page {
+            padding: 5px 0 30px;
+        }
+
+        .booking-header h1 {
+            font-size: 25px;
+        }
+
+        .booking-form {
+            padding: 22px;
+        }
+
+        .card-header {
+            padding: 20px;
+        }
+
+        .form-grid {
             grid-template-columns: 1fr;
+            gap: 17px;
         }
 
-        .parcel-fields {
-            grid-template-columns: 1fr;
-        }
-
-    }
-
-
-    @media (max-width: 600px) {
-
-        .parcel-header {
-            align-items: flex-start;
-        }
-
-        .parcel-header h1 {
-            font-size: 24px;
-        }
-
-        .card-header,
-        .card-body {
-            padding: 18px;
+        .form-group.full {
+            grid-column: auto;
         }
 
         .form-actions {
             flex-direction: column-reverse;
-            align-items: stretch;
         }
 
-        .cancel-btn,
-        .book-btn {
+        .submit-btn,
+        .cancel-btn {
             width: 100%;
         }
-
     }
 
 </style>
 
 
-<div class="parcel-page">
+<div class="booking-page">
 
-    {{-- ============================
-         PAGE HEADER
-    ============================= --}}
 
-    <div class="parcel-header">
+    {{-- PAGE HEADER --}}
 
-        <div class="parcel-header-icon">
-            📦
-        </div>
+    <div class="booking-header">
 
-        <div>
+        <h1>
+            Book a New Parcel 📦
+        </h1>
 
-            <h1>
-                Book New Parcel
-            </h1>
-
-            <p>
-                Enter sender, receiver and parcel details to create a new shipment.
-            </p>
-
-        </div>
+        <p>
+            Enter the receiver and parcel details to create your shipment.
+        </p>
 
     </div>
 
 
-    {{-- ============================
-         VALIDATION ERRORS
-    ============================= --}}
+    {{-- MAIN CARD --}}
 
-    @if($errors->any())
+    <div class="booking-card">
 
-        <div class="error-box">
 
-            <div class="error-title">
-                ⚠️ Please check the following:
+        {{-- CARD HEADER --}}
+
+        <div class="card-header">
+
+            <div class="card-header-content">
+
+                <div class="header-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <h2>
+                        Parcel Booking
+                    </h2>
+
+                    <p>
+                        Fill in the details below to book your parcel.
+                    </p>
+
+                </div>
+
             </div>
-
-            <ul>
-
-                @foreach($errors->all() as $error)
-
-                    <li>{{ $error }}</li>
-
-                @endforeach
-
-            </ul>
 
         </div>
 
-    @endif
+
+        {{-- FORM --}}
+
+        <form
+            action="{{ route('user.parcels.store') }}"
+            method="POST"
+            class="booking-form"
+        >
+
+            @csrf
 
 
-    {{-- ============================
-         FORM
-    ============================= --}}
+            {{-- INFORMATION BOX --}}
 
-    <form
-        method="POST"
-        action="{{ route('user.parcels.store') }}"
-    >
+            <div class="info-box">
 
-        @csrf
-
-
-        {{-- ============================
-             SENDER + RECEIVER
-        ============================= --}}
-
-        <div class="people-grid">
-
-
-            {{-- SENDER --}}
-            <div class="parcel-card">
-
-                <div class="card-header">
-
-                    <div class="card-icon sender-icon">
-                        📤
-                    </div>
-
-                    <div>
-
-                        <h2>
-                            Sender Details
-                        </h2>
-
-                        <p>
-                            Enter the sender's information
-                        </p>
-
-                    </div>
-
+                <div class="info-icon">
+                    ℹ️
                 </div>
 
+                <div>
 
-                <div class="card-body">
+                    <strong>
+                        How this works
+                    </strong>
 
-
-                    {{-- SENDER NAME --}}
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="sender_name"
-                        >
-                            Sender Name
-                            <span class="required">*</span>
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                👤
-                            </span>
-
-                            <input
-                                type="text"
-                                id="sender_name"
-                                name="sender_name"
-                                class="form-input"
-                                value="{{ old('sender_name', auth()->user()->name) }}"
-                                placeholder="Enter sender name"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    {{-- SENDER PHONE --}}
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="sender_phone"
-                        >
-                            Phone Number
-                            <span class="required">*</span>
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon">
-                                📞
-                            </span>
-
-                            <input
-                                type="tel"
-                                id="sender_phone"
-                                name="sender_phone"
-                                class="form-input"
-                                value="{{ old('sender_phone') }}"
-                                placeholder="Enter phone number"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-
-                    {{-- SENDER ADDRESS --}}
-
-                    <div class="form-group">
-
-                        <label
-                            class="form-label"
-                            for="sender_address"
-                        >
-                            Pickup Address
-                            <span class="required">*</span>
-                        </label>
-
-                        <div class="input-wrapper">
-
-                            <span class="input-icon textarea-icon">
-                                📍
-                            </span>
-
-                            <textarea
-                                id="sender_address"
-                                name="sender_address"
-                                class="form-textarea"
-                                placeholder="Enter complete pickup address"
-                                required
-                            >{{ old('sender_address') }}</textarea>
-
-                        </div>
-
-                    </div>
+                    <p>
+                        Enter the receiver and parcel details below.
+                        Sender and pickup details will be added by the admin
+                        after the parcel is booked.
+                    </p>
 
                 </div>
 
             </div>
 
 
-            {{-- RECEIVER --}}
-            <div class="parcel-card">
+            {{-- RECEIVER DETAILS --}}
 
-                <div class="card-header">
+            <div class="form-section">
 
-                    <div class="card-icon receiver-icon">
+                <div class="section-title">
+
+                    <span>
                         📥
-                    </div>
+                    </span>
 
-                    <div>
-
-                        <h2>
-                            Receiver Details
-                        </h2>
-
-                        <p>
-                            Enter the receiver's information
-                        </p>
-
-                    </div>
+                    <h3>
+                        Receiver Details
+                    </h3>
 
                 </div>
 
 
-                <div class="card-body">
+                <div class="form-grid">
 
 
                     {{-- RECEIVER NAME --}}
@@ -642,30 +547,28 @@
                     <div class="form-group">
 
                         <label
-                            class="form-label"
                             for="receiver_name"
+                            class="form-label"
                         >
                             Receiver Name
                             <span class="required">*</span>
                         </label>
 
-                        <div class="input-wrapper">
+                        <input
+                            type="text"
+                            id="receiver_name"
+                            name="receiver_name"
+                            class="form-input @error('receiver_name') input-error @enderror"
+                            value="{{ old('receiver_name') }}"
+                            placeholder="Enter receiver's full name"
+                            required
+                        >
 
-                            <span class="input-icon">
-                                👤
-                            </span>
-
-                            <input
-                                type="text"
-                                id="receiver_name"
-                                name="receiver_name"
-                                class="form-input"
-                                value="{{ old('receiver_name') }}"
-                                placeholder="Enter receiver name"
-                                required
-                            >
-
-                        </div>
+                        @error('receiver_name')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                     </div>
 
@@ -675,60 +578,60 @@
                     <div class="form-group">
 
                         <label
-                            class="form-label"
                             for="receiver_phone"
+                            class="form-label"
                         >
-                            Phone Number
+                            Receiver Phone
                             <span class="required">*</span>
                         </label>
 
-                        <div class="input-wrapper">
+                        <input
+                            type="tel"
+                            id="receiver_phone"
+                            name="receiver_phone"
+                            class="form-input @error('receiver_phone') input-error @enderror"
+                            value="{{ old('receiver_phone') }}"
+                            placeholder="Enter 10-digit phone number"
+                            required
+                        >
 
-                            <span class="input-icon">
-                                📞
-                            </span>
-
-                            <input
-                                type="tel"
-                                id="receiver_phone"
-                                name="receiver_phone"
-                                class="form-input"
-                                value="{{ old('receiver_phone') }}"
-                                placeholder="Enter phone number"
-                                required
-                            >
-
-                        </div>
+                        @error('receiver_phone')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                     </div>
 
 
                     {{-- RECEIVER ADDRESS --}}
 
-                    <div class="form-group">
+                    <div class="form-group full">
 
                         <label
-                            class="form-label"
                             for="receiver_address"
+                            class="form-label"
                         >
-                            Delivery Address
+                            Receiver Address
                             <span class="required">*</span>
                         </label>
 
-                        <div class="input-wrapper">
+                        <textarea
+                            id="receiver_address"
+                            name="receiver_address"
+                            class="form-textarea @error('receiver_address') input-error @enderror"
+                            placeholder="Enter complete delivery address"
+                            required
+                        >{{ old('receiver_address') }}</textarea>
 
-                            <span class="input-icon textarea-icon">
-                                📍
-                            </span>
+                        @error('receiver_address')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
-                            <textarea
-                                id="receiver_address"
-                                name="receiver_address"
-                                class="form-textarea"
-                                placeholder="Enter complete delivery address"
-                                required
-                            >{{ old('receiver_address') }}</textarea>
-
+                        <div class="help-text">
+                            Include house/building number, area, city and PIN code.
                         </div>
 
                     </div>
@@ -737,39 +640,25 @@
 
             </div>
 
-        </div>
 
+            {{-- PARCEL DETAILS --}}
 
-        {{-- ============================
-             PARCEL DETAILS
-        ============================= --}}
+            <div class="form-section">
 
-        <div class="parcel-card parcel-details">
+                <div class="section-title">
 
-            <div class="card-header">
+                    <span>
+                        📦
+                    </span>
 
-                <div class="card-icon parcel-icon">
-                    📦
-                </div>
-
-                <div>
-
-                    <h2>
+                    <h3>
                         Parcel Details
-                    </h2>
-
-                    <p>
-                        Provide information about your shipment
-                    </p>
+                    </h3>
 
                 </div>
 
-            </div>
 
-
-            <div class="card-body">
-
-                <div class="parcel-fields">
+                <div class="form-grid">
 
 
                     {{-- PARCEL TYPE --}}
@@ -777,79 +666,73 @@
                     <div class="form-group">
 
                         <label
-                            class="form-label"
                             for="parcel_type"
+                            class="form-label"
                         >
                             Parcel Type
                             <span class="required">*</span>
                         </label>
 
-                        <div class="select-wrapper">
+                        <select
+                            id="parcel_type"
+                            name="parcel_type"
+                            class="form-select @error('parcel_type') input-error @enderror"
+                            required
+                        >
 
-                            <span class="input-icon">
-                                📦
-                            </span>
+                            <option value="">
+                                Select parcel type
+                            </option>
 
-                            <select
-                                id="parcel_type"
-                                name="parcel_type"
-                                class="form-select"
-                                required
+                            <option
+                                value="Document"
+                                {{ old('parcel_type') == 'Document' ? 'selected' : '' }}
                             >
+                                📄 Document
+                            </option>
 
-                                <option value="">
-                                    Select parcel type
-                                </option>
+                            <option
+                                value="Electronics"
+                                {{ old('parcel_type') == 'Electronics' ? 'selected' : '' }}
+                            >
+                                💻 Electronics
+                            </option>
 
-                                <option
-                                    value="Document"
-                                    {{ old('parcel_type') == 'Document' ? 'selected' : '' }}
-                                >
-                                    Document
-                                </option>
+                            <option
+                                value="Clothing"
+                                {{ old('parcel_type') == 'Clothing' ? 'selected' : '' }}
+                            >
+                                👕 Clothing
+                            </option>
 
-                                <option
-                                    value="Electronics"
-                                    {{ old('parcel_type') == 'Electronics' ? 'selected' : '' }}
-                                >
-                                    Electronics
-                                </option>
+                            <option
+                                value="Food"
+                                {{ old('parcel_type') == 'Food' ? 'selected' : '' }}
+                            >
+                                🍱 Food
+                            </option>
 
-                                <option
-                                    value="Clothing"
-                                    {{ old('parcel_type') == 'Clothing' ? 'selected' : '' }}
-                                >
-                                    Clothing
-                                </option>
+                            <option
+                                value="Fragile"
+                                {{ old('parcel_type') == 'Fragile' ? 'selected' : '' }}
+                            >
+                                🥂 Fragile
+                            </option>
 
-                                <option
-                                    value="Food"
-                                    {{ old('parcel_type') == 'Food' ? 'selected' : '' }}
-                                >
-                                    Food
-                                </option>
+                            <option
+                                value="Other"
+                                {{ old('parcel_type') == 'Other' ? 'selected' : '' }}
+                            >
+                                📦 Other
+                            </option>
 
-                                <option
-                                    value="Fragile"
-                                    {{ old('parcel_type') == 'Fragile' ? 'selected' : '' }}
-                                >
-                                    Fragile
-                                </option>
+                        </select>
 
-                                <option
-                                    value="Other"
-                                    {{ old('parcel_type') == 'Other' ? 'selected' : '' }}
-                                >
-                                    Other
-                                </option>
-
-                            </select>
-
-                            <span class="select-arrow">
-                                ▼
-                            </span>
-
-                        </div>
+                        @error('parcel_type')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                     </div>
 
@@ -859,31 +742,33 @@
                     <div class="form-group">
 
                         <label
-                            class="form-label"
                             for="weight"
+                            class="form-label"
                         >
                             Weight (kg)
                             <span class="required">*</span>
                         </label>
 
-                        <div class="input-wrapper">
+                        <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            class="form-input @error('weight') input-error @enderror"
+                            value="{{ old('weight') }}"
+                            placeholder="e.g. 2.50"
+                            min="0.01"
+                            step="0.01"
+                            required
+                        >
 
-                            <span class="input-icon">
-                                ⚖️
-                            </span>
+                        @error('weight')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
-                            <input
-                                type="number"
-                                id="weight"
-                                name="weight"
-                                class="form-input"
-                                value="{{ old('weight') }}"
-                                min="0.1"
-                                step="0.01"
-                                placeholder="e.g. 2.5"
-                                required
-                            >
-
+                        <div class="help-text">
+                            Enter the approximate parcel weight.
                         </div>
 
                     </div>
@@ -894,54 +779,27 @@
                     <div class="form-group">
 
                         <label
-                            class="form-label"
                             for="estimated_delivery_date"
+                            class="form-label"
                         >
-                            Estimated Delivery
+                            Estimated Delivery Date
                             <span class="required">*</span>
                         </label>
 
-                        <div class="input-wrapper">
+                        <input
+                            type="date"
+                            id="estimated_delivery_date"
+                            name="estimated_delivery_date"
+                            class="form-input @error('estimated_delivery_date') input-error @enderror"
+                            value="{{ old('estimated_delivery_date') }}"
+                            required
+                        >
 
-                            <span class="input-icon">
-                                📅
-                            </span>
-
-                            <input
-                                type="date"
-                                id="estimated_delivery_date"
-                                name="estimated_delivery_date"
-                                class="form-input"
-                                value="{{ old('estimated_delivery_date') }}"
-                                min="{{ date('Y-m-d') }}"
-                                required
-                            >
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                {{-- TRACKING INFORMATION --}}
-
-                <div class="tracking-info">
-
-                    <div class="tracking-info-icon">
-                        i
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Automatic Tracking Number
-                        </h3>
-
-                        <p>
-                            A unique SwiftTrack tracking number will be
-                            automatically generated after booking.
-                        </p>
+                        @error('estimated_delivery_date')
+                            <div class="error-message">
+                                {{ $message }}
+                            </div>
+                        @enderror
 
                     </div>
 
@@ -949,32 +807,30 @@
 
             </div>
 
-        </div>
 
+            {{-- BUTTONS --}}
 
-        {{-- ============================
-             ACTION BUTTONS
-        ============================= --}}
+            <div class="form-actions">
 
-        <div class="form-actions">
+                <a
+                    href="{{ route('user.parcels') }}"
+                    class="cancel-btn"
+                >
+                    ← Cancel
+                </a>
 
-            <a
-                href="{{ route('user.dashboard') }}"
-                class="cancel-btn"
-            >
-                Cancel
-            </a>
+                <button
+                    type="submit"
+                    class="submit-btn"
+                >
+                    📦 Book Parcel
+                </button>
 
-            <button
-                type="submit"
-                class="book-btn"
-            >
-                📦 &nbsp; Book Parcel
-            </button>
+            </div>
 
-        </div>
+        </form>
 
-    </form>
+    </div>
 
 </div>
 

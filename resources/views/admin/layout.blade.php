@@ -1,4 +1,3 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>@yield('title','Admin | SwiftTrack')</title><script src="https://cdn.tailwindcss.com"></script></head><body class="bg-slate-100 text-slate-900"><div class="min-h-screen md:flex"><aside class="hidden md:flex w-64 bg-slate-950 text-white flex-col fixed inset-y-0"><div class="p-6 border-b border-slate-800"><div class="text-2xl font-black">🚚 Swift<span class="text-blue-400">Track</span></div><p class="text-xs text-slate-500 mt-1">Admin Control Centre</p></div><nav class="p-4 space-y-2 flex-1"><a href="{{ route('admin.dashboard') }}" class="block px-4 py-3 rounded-xl hover:bg-slate-800">🏠 Dashboard</a><a href="{{ route('admin.parcels') }}" class="block px-4 py-3 rounded-xl hover:bg-slate-800">📦 Parcels</a><a href="{{ route('admin.users') }}" class="block px-4 py-3 rounded-xl hover:bg-slate-800">👥 Users</a><a href="{{ route('admin.logs') }}" class="block px-4 py-3 rounded-xl hover:bg-slate-800">📝 Activity Logs</a></nav><div class="p-4 border-t border-slate-800"><form method="POST" action="{{ route('admin.logout') }}">@csrf<button class="w-full text-left px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10">🚪 Logout</button></form></div></aside><main class="flex-1 md:ml-64"><header class="bg-white border-b px-6 py-4 flex items-center justify-between sticky top-0 z-10"><div><p class="text-xs text-slate-400">SwiftTrack Admin</p><h1 class="text-xl font-black">@yield('page-heading')</h1></div><div class="text-right"><p class="font-semibold text-sm">{{ auth()->user()->name }}</p><p class="text-xs text-blue-600">Administrator</p></div></header><section class="p-5 md:p-8">@if(session('success'))<div class="mb-6 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-3">{{ session('success') }}</div>@endif@if($errors->any())<div class="mb-6 rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3">{{ $errors->first() }}</div>@endif @yield('content')</section></main></div></body></html>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,16 +14,17 @@
         @yield('title', 'Admin | SwiftTrack')
     </title>
 
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
         }
 
         body {
+            margin: 0;
+            font-family: Arial, sans-serif;
             background: #f1f5f9;
             color: #1e293b;
         }
@@ -55,6 +55,7 @@
 
         .brand h1 {
             font-size: 24px;
+            margin: 0;
         }
 
         .brand p {
@@ -157,6 +158,7 @@
         .topbar h2 {
             color: #0f172a;
             font-size: 21px;
+            margin: 0;
         }
 
         .admin-badge {
@@ -203,6 +205,7 @@
             .content {
                 padding: 20px;
             }
+
         }
 
         @media (max-width: 650px) {
@@ -225,169 +228,181 @@
             .topbar {
                 padding: 0 18px;
             }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
 
-    <!-- SIDEBAR -->
 
-    <aside class="sidebar">
+<!-- SIDEBAR -->
 
-        <div class="brand">
+<aside class="sidebar">
 
-            <div class="brand-icon">
-                🚚
-            </div>
+    <div class="brand">
 
-            <h1>
-                SwiftTrack
-            </h1>
+        <div class="brand-icon">
+            🚚
+        </div>
 
-            <p>
-                Admin Control Centre
-            </p>
+        <h1>
+            SwiftTrack
+        </h1>
 
+        <p>
+            Admin Control Centre
+        </p>
+
+    </div>
+
+
+    <div class="nav-title">
+        Management
+    </div>
+
+
+    <a
+        href="{{ route('admin.dashboard') }}"
+        class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+    >
+
+        <span class="nav-icon">
+            📊
+        </span>
+
+        Dashboard
+
+    </a>
+
+
+    <a
+        href="{{ route('admin.parcels') }}"
+        class="nav-link {{ request()->routeIs('admin.parcels') ? 'active' : '' }}"
+    >
+
+        <span class="nav-icon">
+            📦
+        </span>
+
+        Parcels
+
+    </a>
+
+
+    <a
+        href="{{ route('admin.users') }}"
+        class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}"
+    >
+
+        <span class="nav-icon">
+            👥
+        </span>
+
+        Users
+
+    </a>
+
+
+    <a
+        href="{{ route('admin.logs') }}"
+        class="nav-link {{ request()->routeIs('admin.logs') ? 'active' : '' }}"
+    >
+
+        <span class="nav-icon">
+            📋
+        </span>
+
+        Activity Logs
+
+    </a>
+
+
+    <div class="admin-profile">
+
+        <div class="admin-name">
+            {{ auth()->user()->name }}
+        </div>
+
+        <div class="admin-email">
+            {{ auth()->user()->email }}
         </div>
 
 
-        <div class="nav-title">
-            Management
-        </div>
-
-
-        <a
-            href="{{ route('admin.dashboard') }}"
-            class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
+        <form
+            method="POST"
+            action="{{ route('admin.logout') }}"
         >
 
-            <span class="nav-icon">
-                📊
-            </span>
+            @csrf
 
-            Dashboard
-
-        </a>
-
-
-        <a
-            href="{{ route('admin.parcels') }}"
-            class="nav-link {{ request()->routeIs('admin.parcels') ? 'active' : '' }}"
-        >
-
-            <span class="nav-icon">
-                📦
-            </span>
-
-            Parcels
-
-        </a>
-
-
-        <a
-            href="{{ route('admin.users') }}"
-            class="nav-link {{ request()->routeIs('admin.users') ? 'active' : '' }}"
-        >
-
-            <span class="nav-icon">
-                👥
-            </span>
-
-            Users
-
-        </a>
-
-
-        <a
-            href="{{ route('admin.logs') }}"
-            class="nav-link {{ request()->routeIs('admin.logs') ? 'active' : '' }}"
-        >
-
-            <span class="nav-icon">
-                📋
-            </span>
-
-            Activity Logs
-
-        </a>
-
-
-        <div class="admin-profile">
-
-            <div class="admin-name">
-                {{ auth()->user()->name }}
-            </div>
-
-            <div class="admin-email">
-                {{ auth()->user()->email }}
-            </div>
-
-            <form
-                method="POST"
-                action="{{ route('admin.logout') }}"
+            <button
+                type="submit"
+                class="logout-btn"
             >
+                🚪 Logout
+            </button>
 
-                @csrf
+        </form>
 
-                <button
-                    type="submit"
-                    class="logout-btn"
-                >
-                    🚪 Logout
-                </button>
+    </div>
 
-            </form>
+</aside>
 
+
+<!-- MAIN CONTENT -->
+
+<main class="main">
+
+
+    <!-- TOP BAR -->
+
+    <header class="topbar">
+
+        <h2>
+            @yield('page-title', 'Admin Dashboard')
+        </h2>
+
+        <div class="admin-badge">
+            🛡️ Administrator
         </div>
 
-    </aside>
+    </header>
 
 
-    <!-- MAIN -->
+    <!-- PAGE CONTENT -->
 
-    <main class="main">
+    <section class="content">
 
-        <header class="topbar">
 
-            <h2>
-                @yield('page-title', 'Admin Dashboard')
-            </h2>
+        @if(session('success'))
 
-            <div class="admin-badge">
-                🛡️ Administrator
+            <div class="success-message">
+                {{ session('success') }}
             </div>
 
-        </header>
+        @endif
 
 
-        <section class="content">
+        @if(session('error'))
 
-            @if(session('success'))
+            <div class="error-message">
+                {{ session('error') }}
+            </div>
 
-                <div class="success-message">
-                    {{ session('success') }}
-                </div>
-
-            @endif
+        @endif
 
 
-            @if(session('error'))
-
-                <div class="error-message">
-                    {{ session('error') }}
-                </div>
-
-            @endif
+        @yield('content')
 
 
-            @yield('content')
+    </section>
 
-        </section>
+</main>
 
-    </main>
 
 </body>
 

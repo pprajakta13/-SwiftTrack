@@ -2,219 +2,371 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Login | SwiftTrack</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #020617;
+            overflow-x: hidden;
+        }
+
+        .login-page {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 1050px;
+            min-height: 620px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            margin: 0 auto;
+        }
+
+        .login-left {
+            background: linear-gradient(
+                135deg,
+                #172554 0%,
+                #1e40af 55%,
+                #2563eb 100%
+            );
+
+            color: white;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand {
+            font-size: 30px;
+            font-weight: 900;
+            margin-bottom: 55px;
+        }
+
+        .brand span {
+            color: #93c5fd;
+        }
+
+        .login-left h1 {
+            font-size: 54px;
+            line-height: 1.05;
+            font-weight: 900;
+            margin: 0;
+        }
+
+        .login-left-description {
+            margin-top: 25px;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #dbeafe;
+            max-width: 430px;
+        }
+
+        .features {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            color: #eff6ff;
+            font-size: 16px;
+        }
+
+        .login-right {
+            background: white;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-right h2 {
+            margin: 0;
+            color: #0f172a;
+            font-size: 36px;
+            line-height: 1.15;
+            font-weight: 900;
+        }
+
+        .subtitle {
+            margin-top: 12px;
+            margin-bottom: 35px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            color: #0f172a;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .form-group input {
+            width: 100%;
+            height: 54px;
+            padding: 0 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 13px;
+            background: #f8fafc;
+            color: #0f172a;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.10);
+        }
+
+        .login-button {
+            width: 100%;
+            height: 54px;
+            border: none;
+            border-radius: 13px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .login-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 28px;
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .register-text a {
+            display: block;
+            margin-top: 6px;
+            color: #2563eb;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .admin-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .admin-login a {
+            color: #94a3b8;
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .admin-login a:hover {
+            color: #2563eb;
+        }
+
+        .error-box {
+            margin-bottom: 20px;
+            padding: 13px 15px;
+            border-radius: 12px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 14px;
+        }
+
+        @media (max-width: 800px) {
+            .login-page {
+                padding: 18px;
+            }
+
+            .login-card {
+                grid-template-columns: 1fr;
+                min-height: auto;
+                max-width: 550px;
+            }
+
+            .login-left {
+                display: none;
+            }
+
+            .login-right {
+                padding: 35px 25px;
+            }
+        }
+    </style>
 </head>
 
-<body class="min-h-screen bg-slate-950 flex items-center justify-center p-6">
+<body>
 
-<div class="w-full max-w-5xl bg-white rounded-3xl overflow-hidden shadow-2xl grid md:grid-cols-2">
+<div class="login-page">
 
+    <div class="login-card">
 
-    <!-- LEFT SIDE -->
+        <!-- LEFT SIDE -->
 
-    <div class="hidden md:flex bg-gradient-to-br from-blue-950 via-blue-900 to-blue-600 text-white p-12 flex-col justify-center">
+        <div class="login-left">
 
-        <div class="text-3xl font-black">
-
-            🚚 Swift<span class="text-blue-300">Track</span>
-
-        </div>
-
-
-        <h1 class="text-5xl font-black mt-10 leading-tight">
-
-            Track every parcel.
-            <br>
-            Every step.
-
-        </h1>
-
-
-        <p class="mt-5 text-blue-100 leading-7">
-
-            Book parcels, follow delivery progress and see
-            the complete status history from one simple dashboard.
-
-        </p>
-
-
-        <div class="mt-8 space-y-3 text-blue-50">
-
-            <p>
-                ✓ Easy parcel booking
-            </p>
-
-            <p>
-                ✓ Instant tracking number
-            </p>
-
-            <p>
-                ✓ Delivery status timeline
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- RIGHT SIDE / LOGIN FORM -->
-
-    <div class="p-8 md:p-12">
-
-        <div class="md:hidden text-2xl font-black text-slate-900 mb-8">
-
-            🚚 Swift<span class="text-blue-600">Track</span>
-
-        </div>
-
-
-        <h2 class="text-3xl font-black text-slate-900">
-
-            Welcome back 👋
-
-        </h2>
-
-
-        <p class="text-slate-500 mt-2 mb-8">
-
-            Login to your SwiftTrack account.
-
-        </p>
-
-
-        <!-- ERRORS -->
-
-        @if($errors->any())
-
-            <div class="mb-5 rounded-xl bg-red-50 border border-red-200 p-4 text-sm text-red-700">
-
-                @foreach($errors->all() as $error)
-
-                    <div>
-                        {{ $error }}
-                    </div>
-
-                @endforeach
-
+            <div class="brand">
+                🚚 Swift<span>Track</span>
             </div>
 
-        @endif
+            <h1>
+                Track every parcel.<br>
+                Every step.
+            </h1>
+
+            <p class="login-left-description">
+                Book parcels, follow delivery progress and see
+                the complete status history from one simple dashboard.
+            </p>
+
+            <div class="features">
+                <div>✓ Easy parcel booking</div>
+                <div>✓ Instant tracking number</div>
+                <div>✓ Delivery status timeline</div>
+            </div>
+
+        </div>
 
 
-        <!-- LOGIN FORM -->
+        <!-- RIGHT SIDE -->
 
-        <form
-            method="POST"
-            action="{{ route('user.login.submit') }}"
-            class="space-y-5"
-        >
+        <div class="login-right">
 
-            @csrf
+            <h2>
+                Welcome back 👋
+            </h2>
 
-
-            <!-- EMAIL -->
-
-            <div>
-
-                <label class="block text-sm font-semibold mb-2">
-
-                    Email address
-
-                </label>
+            <p class="subtitle">
+                Login to your SwiftTrack account.
+            </p>
 
 
-                <input
-                    name="email"
-                    type="email"
-                    value="{{ old('email') }}"
-                    required
-                    autofocus
-                    class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
-                    placeholder="you@example.com"
+            @if($errors->any())
+
+                <div class="error-box">
+
+                    @foreach($errors->all() as $error)
+
+                        <div>{{ $error }}</div>
+
+                    @endforeach
+
+                </div>
+
+            @endif
+
+
+            <form
+                method="POST"
+                action="{{ route('user.login.submit') }}"
+            >
+
+                @csrf
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email address
+                    </label>
+
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value="{{ old('email') }}"
+                        required
+                        autofocus
+                        placeholder="you@example.com"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        required
+                        placeholder="••••••••"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-button"
                 >
+                    Login to SwiftTrack
+                </button>
+
+            </form>
+
+
+            <div class="register-text">
+
+                Don't have an account?
+
+                <a href="{{ route('user.register') }}">
+                    Create account
+                </a>
 
             </div>
 
 
-            <!-- PASSWORD -->
+            <div class="admin-login">
 
-            <div>
-
-                <label class="block text-sm font-semibold mb-2">
-
-                    Password
-
-                </label>
-
-
-                <input
-                    name="password"
-                    type="password"
-                    required
-                    class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-blue-500"
-                    placeholder="••••••••"
-                >
+                <a href="{{ route('admin.login') }}">
+                    🔐 Admin Login
+                </a>
 
             </div>
 
-
-            <!-- LOGIN BUTTON -->
-
-            <button
-                type="submit"
-                class="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white py-3.5 font-bold"
-            >
-
-                Login to SwiftTrack
-
-            </button>
-
-        </form>
-
-
-        <!-- REGISTER -->
-
-        <p class="text-center text-slate-500 mt-7">
-
-            Don't have an account?
-
-            <a
-                class="text-blue-600 font-bold"
-                href="{{ route('user.register') }}"
-            >
-
-                Create account
-
-            </a>
-
-        </p>
-
-
-        <!-- ADMIN LOGIN -->
-
-        <p class="text-center mt-4">
-
-            <a
-                class="text-xs text-slate-400 hover:text-blue-600"
-                href="{{ route('admin.login') }}"
-            >
-
-                🔐 Admin Login
-
-            </a>
-
-        </p>
+        </div>
 
     </div>
 

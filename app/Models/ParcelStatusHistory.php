@@ -17,11 +17,6 @@ class ParcelStatusHistory extends Model
         'location',
         'remarks',
         'updated_by',
-        'created_at',
-    ];
-
-    protected $casts = [
-        'created_at' => 'datetime',
     ];
 
     public function parcel()

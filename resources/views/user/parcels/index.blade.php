@@ -34,10 +34,12 @@
         border-radius: 9px;
         font-weight: bold;
         font-size: 14px;
+        transition: 0.2s;
     }
 
     .book-btn:hover {
         background: #1d4ed8;
+        color: white;
     }
 
     .table-card {
@@ -121,10 +123,12 @@
         border-radius: 7px;
         font-size: 12px;
         font-weight: bold;
+        transition: 0.2s;
     }
 
     .view-btn:hover {
         background: #dbeafe;
+        color: #1d4ed8;
     }
 
     .empty {
@@ -157,6 +161,15 @@
         font-weight: bold;
     }
 
+    .empty a:hover {
+        background: #1d4ed8;
+        color: white;
+    }
+
+    .date-text {
+        white-space: nowrap;
+    }
+
     @media (max-width: 650px) {
         .page-header {
             flex-direction: column;
@@ -164,7 +177,6 @@
         }
     }
 </style>
-
 
 <div class="page-header">
 
@@ -185,7 +197,6 @@
 
 </div>
 
-
 <div class="table-card">
 
     @if($parcels->count() > 0)
@@ -195,25 +206,15 @@
             <table>
 
                 <thead>
-
                     <tr>
-
                         <th>Tracking Number</th>
-
                         <th>Receiver</th>
-
-                        <th>Type</th>
-
+                        <th>Parcel Type</th>
                         <th>Weight</th>
-
                         <th>Status</th>
-
                         <th>Delivery Date</th>
-
                         <th>Action</th>
-
                     </tr>
-
                 </thead>
 
                 <tbody>
@@ -221,7 +222,6 @@
                     @foreach($parcels as $parcel)
 
                         @php
-
                             $statusClass = 'booked';
 
                             if (in_array($parcel->current_status, [
@@ -240,55 +240,58 @@
                             if ($parcel->current_status === 'Cancelled') {
                                 $statusClass = 'cancelled';
                             }
-
                         @endphp
 
                         <tr>
 
+                            {{-- TRACKING NUMBER --}}
                             <td>
-
                                 <a
                                     href="{{ route('user.parcels.show', $parcel->tracking_number) }}"
                                     class="tracking"
                                 >
                                     {{ $parcel->tracking_number }}
                                 </a>
-
                             </td>
 
+                            {{-- RECEIVER --}}
                             <td>
                                 {{ $parcel->receiver_name }}
                             </td>
 
+                            {{-- PARCEL TYPE --}}
                             <td>
                                 {{ $parcel->parcel_type }}
                             </td>
 
+                            {{-- WEIGHT --}}
                             <td>
                                 {{ number_format($parcel->weight, 2) }} kg
                             </td>
 
+                            {{-- STATUS --}}
                             <td>
-
                                 <span class="status {{ $statusClass }}">
                                     {{ $parcel->current_status }}
                                 </span>
-
                             </td>
 
-                            <td>
-                                {{ $parcel->estimated_delivery_date->format('d M Y') }}
+                            {{-- DELIVERY DATE --}}
+                            <td class="date-text">
+                                {{ $parcel->estimated_delivery_date
+                                    ? \Carbon\Carbon::parse($parcel->estimated_delivery_date)->format('d M Y')
+                                    : 'Not set'
+                                }}
                             </td>
 
+                            {{-- TRACK BUTTON --}}
                             <td>
-
                                 <a
                                     href="{{ route('user.parcels.show', $parcel->tracking_number) }}"
                                     class="view-btn"
                                 >
                                     Track →
                                 </a>
-
                             </td>
 
                         </tr>
@@ -309,9 +312,7 @@
                 📦
             </div>
 
-            <h2>
-                No Parcels Found
-            </h2>
+            <h2>No Parcels Found</h2>
 
             <p>
                 You haven't booked any parcels yet.

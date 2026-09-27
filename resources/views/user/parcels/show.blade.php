@@ -1,12 +1,4 @@
 @extends('user.layout')
-@section('title','Track '.$parcel->tracking_number.' | SwiftTrack')
-@section('page-heading','Track Parcel')
-@section('content')
-<div class="max-w-6xl"><div class="rounded-3xl bg-slate-950 text-white p-7 mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-5"><div><p class="text-slate-400 text-sm">Tracking Number</p><h2 class="text-3xl font-black mt-1 tracking-wide">{{ $parcel->tracking_number }}</h2><p class="text-slate-400 mt-2">Estimated delivery: {{ $parcel->estimated_delivery_date->format('d M Y') }}</p></div><div class="text-left md:text-right"><p class="text-slate-400 text-sm">Current Status</p><span class="inline-block mt-2 px-4 py-2 rounded-full bg-blue-500 text-white font-bold">{{ $parcel->current_status }}</span></div></div>
-<div class="grid lg:grid-cols-3 gap-6"><div class="lg:col-span-2 bg-white rounded-2xl border p-6"><h3 class="text-xl font-black mb-6">Shipment Timeline</h3><div class="space-y-6">@forelse($history as $item)<div class="flex gap-4"><div class="flex flex-col items-center"><div class="w-4 h-4 rounded-full bg-blue-600 ring-4 ring-blue-100"></div>@if(!$loop->last)<div class="w-0.5 h-full min-h-10 bg-blue-100 mt-1"></div>@endif</div><div class="pb-4"><div class="flex flex-wrap items-center gap-2"><h4 class="font-black">{{ $item->status }}</h4><span class="text-xs text-slate-400">{{ optional($item->created_at)->format('d M Y, h:i A') }}</span></div><p class="text-sm text-blue-600 mt-1">📍 {{ $item->location ?: '—' }}</p><p class="text-sm text-slate-500 mt-1">{{ $item->remarks ?: 'Status updated.' }}</p></div></div>@empty<p class="text-slate-500">No tracking updates yet.</p>@endforelse</div></div>
-<div class="space-y-6"><div class="bg-white rounded-2xl border p-6"><h3 class="font-black text-lg mb-4">Shipment Details</h3><div class="space-y-4 text-sm"><div><p class="text-slate-400">Parcel Type</p><p class="font-semibold">{{ $parcel->parcel_type }}</p></div><div><p class="text-slate-400">Weight</p><p class="font-semibold">{{ number_format($parcel->weight,2) }} kg</p></div><div><p class="text-slate-400">Sender</p><p class="font-semibold">{{ $parcel->sender_name }}</p><p class="text-slate-500">{{ $parcel->sender_address }}</p></div><div><p class="text-slate-400">Receiver</p><p class="font-semibold">{{ $parcel->receiver_name }}</p><p class="text-slate-500">{{ $parcel->receiver_address }}</p></div></div></div><a href="{{ route('user.parcels') }}" class="block text-center bg-white border rounded-xl py-3 font-bold">← Back to My Parcels</a></div></div></div>
-@endsection
-@extends('user.layout')
 
 @section('title', 'Track Parcel | SwiftTrack')
 
@@ -66,6 +58,10 @@
         font-size: 14px;
         font-weight: bold;
         margin-bottom: 20px;
+    }
+
+    .back-btn:hover {
+        text-decoration: underline;
     }
 
     .details-grid {
@@ -204,6 +200,12 @@
         margin-bottom: 5px;
     }
 
+    .empty-value {
+        color: #94a3b8;
+        font-style: italic;
+        font-weight: normal;
+    }
+
     @media (max-width: 750px) {
 
         .tracking-header {
@@ -222,6 +224,8 @@
 </style>
 
 
+{{-- BACK BUTTON --}}
+
 <a
     href="{{ route('user.parcels') }}"
     class="back-btn"
@@ -230,7 +234,7 @@
 </a>
 
 
-<!-- TRACKING HEADER -->
+{{-- TRACKING HEADER --}}
 
 <div class="tracking-header">
 
@@ -261,7 +265,7 @@
 </div>
 
 
-<!-- DELIVERY INFORMATION -->
+{{-- DELIVERY INFORMATION --}}
 
 <div class="delivery-box">
 
@@ -270,16 +274,23 @@
     </strong>
 
     Your parcel is expected to be delivered by
+
     <strong>
-        {{ $parcel->estimated_delivery_date->format('d M Y') }}
+        {{ $parcel->estimated_delivery_date
+            ? \Carbon\Carbon::parse($parcel->estimated_delivery_date)->format('d M Y')
+            : 'Not set'
+        }}
     </strong>
 
 </div>
 
 
-<!-- SENDER / RECEIVER -->
+{{-- SENDER + RECEIVER --}}
 
 <div class="details-grid">
+
+
+    {{-- SENDER --}}
 
     <div class="card">
 
@@ -294,10 +305,19 @@
             </div>
 
             <div class="info-value">
-                {{ $parcel->sender_name }}
+
+                @if($parcel->sender_name)
+                    {{ $parcel->sender_name }}
+                @else
+                    <span class="empty-value">
+                        Not added by admin yet
+                    </span>
+                @endif
+
             </div>
 
         </div>
+
 
         <div class="info-row">
 
@@ -306,25 +326,44 @@
             </div>
 
             <div class="info-value">
-                {{ $parcel->sender_phone }}
+
+                @if($parcel->sender_phone)
+                    {{ $parcel->sender_phone }}
+                @else
+                    <span class="empty-value">
+                        Not added yet
+                    </span>
+                @endif
+
             </div>
 
         </div>
 
+
         <div class="info-row">
 
             <div class="info-label">
-                Address
+                Pickup / Sender Address
             </div>
 
             <div class="info-value">
-                {{ $parcel->sender_address }}
+
+                @if($parcel->sender_address)
+                    {{ $parcel->sender_address }}
+                @else
+                    <span class="empty-value">
+                        Not added by admin yet
+                    </span>
+                @endif
+
             </div>
 
         </div>
 
     </div>
 
+
+    {{-- RECEIVER --}}
 
     <div class="card">
 
@@ -344,6 +383,7 @@
 
         </div>
 
+
         <div class="info-row">
 
             <div class="info-label">
@@ -355,6 +395,7 @@
             </div>
 
         </div>
+
 
         <div class="info-row">
 
@@ -373,15 +414,21 @@
 </div>
 
 
-<!-- PARCEL INFORMATION -->
+{{-- PARCEL INFORMATION --}}
 
-<div class="card" style="margin-bottom: 25px;">
+<div
+    class="card"
+    style="margin-bottom: 25px;"
+>
 
     <h2>
         📦 Parcel Information
     </h2>
 
-    <div class="details-grid" style="margin-bottom: 0;">
+    <div
+        class="details-grid"
+        style="margin-bottom: 0;"
+    >
 
         <div class="info-row">
 
@@ -394,6 +441,7 @@
             </div>
 
         </div>
+
 
         <div class="info-row">
 
@@ -412,7 +460,7 @@
 </div>
 
 
-<!-- STATUS TIMELINE -->
+{{-- STATUS TIMELINE --}}
 
 <div class="timeline-card">
 
@@ -428,9 +476,11 @@
 
                 <div class="timeline-dot"></div>
 
+
                 <div class="timeline-status">
                     {{ $item->status }}
                 </div>
+
 
                 <div class="timeline-date">
 
@@ -441,6 +491,7 @@
 
                 </div>
 
+
                 @if($item->location)
 
                     <div class="timeline-location">
@@ -449,10 +500,17 @@
 
                 @endif
 
+
                 @if($item->remarks)
 
                     <div class="timeline-remarks">
                         {{ $item->remarks }}
+                    </div>
+
+                @else
+
+                    <div class="timeline-remarks">
+                        Status updated.
                     </div>
 
                 @endif
